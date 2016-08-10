@@ -24,6 +24,7 @@ public final class DAOFactory {
 	
 	public static DAOFactory getInstance(){
 		return instance;
+		//dsfsgasfa
 	}
 	
 }

@@ -1,0 +1,32 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="WEB:war exploded">
+    <output-path>$PROJECT_DIR$/WEB/target/WEB</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="WEB" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="archive" name="WEB-1.0.jar">
+            <element id="module-output" name="WEB" />
+          </element>
+          <element id="archive" name="SERVICES-1.0.jar">
+            <element id="module-output" name="SERVICES" />
+          </element>
+          <element id="archive" name="ENTITIES-1.0.jar">
+            <element id="module-output" name="ENTITIES" />
+          </element>
+          <element id="archive" name="DAO-1.0.jar">
+            <element id="module-output" name="DAO" />
+          </element>
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.6" />
+          <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/WEB/target/WEB/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="WEB/web/Web" />
+    </root>
+  </artifact>
+</component>

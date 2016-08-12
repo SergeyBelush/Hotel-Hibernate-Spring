@@ -16,6 +16,7 @@ import by.htp3.hotel.bean.Room;
 import by.htp3.hotel.bean.User;
 import by.htp3.hotel.command.Command;
 import by.htp3.hotel.controller.Controller;
+import by.htp3.hotel.dao.DAOFactory;
 
 public class ReserveRooms implements Command {
 
@@ -23,37 +24,39 @@ public class ReserveRooms implements Command {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
 		String internumber = request.getParameter("numbers");
-		int x = Integer.valueOf(internumber);
 
-		if (internumber == null || internumber == "") {
+
+		if (internumber == null || internumber.equals("")) {
 			send("Please, Enter Number Room", request, response);
 			return;
 		}
 
-		List<Room> rooms = GetFreeRooms.getFreeRoomsFromDatabase();
+		int x = Integer.valueOf(internumber);
 
-		for (int i = 0; i < rooms.size(); i++) {
-			if (x == rooms.get(i).getNumber()) {
-				
+		List<Room> rooms = DAOFactory.getInstance().getRoomDAO().getFreeRoomsFromDatabase();
+
+		for (Room room : rooms) {
+			if (x == room.getNumber()) {
+
 				Connection con = null;
 				PreparedStatement st = null;
 				ResultSet rs = null;
 				User user;
-				user =(User)request.getSession(false).getAttribute("user");
+				user = (User) request.getSession(false).getAttribute("user");
 
 				try {
 					con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/mydb", "root", "12345");
 
 					st = con.prepareStatement("UPDATE rooms SET userid=? WHERE number=?");
 					//st = con.prepareStatement("SELECT * FROM persons where id=?");
-					
+
 					st.setInt(1, user.getUserid());
 					System.out.println("bjhbhjj");
 					st.setInt(2, x);
 					System.out.println("bjhbhjj");
-					
+
 					//System.out.println("bjhbhjj");
-					
+
 					rs = st.executeQuery();
 
 				} catch (SQLException e) {

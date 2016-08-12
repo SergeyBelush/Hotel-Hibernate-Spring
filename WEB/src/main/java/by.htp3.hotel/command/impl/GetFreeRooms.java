@@ -16,58 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import by.htp3.hotel.bean.Room;
 import by.htp3.hotel.command.Command;
 import by.htp3.hotel.command.util.QueryUtil;
+import by.htp3.hotel.dao.DAOFactory;
 
 public class GetFreeRooms implements Command {
 
-	
-	public static List<Room> getFreeRoomsFromDatabase () throws IOException {
-		List<Room> rooms = new ArrayList<>();
-		
-		Connection con = null;
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		try {
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/mydb", "root", "12345");
 
-			st = con.prepareStatement("SELECT * FROM rooms");
-			rs = st.executeQuery();
-
-			while (rs.next()) {
-				Room room = new Room(rs.getInt("number"), rs.getString("typeroom"), rs.getInt("priceaday"),
-						rs.getInt("userid"));
-				if (room.getUserid() == 0) {
-					rooms.add(room);
-				}
-			}
-
-		} catch (SQLException e) {
-			throw new IOException(e.getMessage());
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					
-				}
-			}
-
-			if (st != null) {
-				try {
-					st.close();
-				} catch (SQLException e) {
-					
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					
-				}
-			}
-		}
-		return rooms;
-	}
 		
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -77,7 +30,7 @@ public class GetFreeRooms implements Command {
 
 		System.out.println(query);
 
-		List<Room> rooms = getFreeRoomsFromDatabase();
+		List<Room> rooms = DAOFactory.getInstance().getRoomDAO().getFreeRoomsFromDatabase();
 
 		request.setAttribute("free_rooms", rooms);
 

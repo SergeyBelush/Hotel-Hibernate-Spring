@@ -1,15 +1,10 @@
-package by.htp3.hotel;
+package by.htp3.hotel.dao.impl;
 
 import by.htp3.hotel.bean.User;
 import by.htp3.hotel.dao.exception.DAOException;
-import by.htp3.hotel.dao.impl.SQLUserDAO;
-import by.htp3.hotel.dao.impl.pool.ConnectionPool;
-import by.htp3.hotel.dao.impl.pool.ConnectionPoolException;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import java.sql.Connection;
 
 import static org.junit.Assert.assertTrue;
 

@@ -26,5 +26,5 @@ public final class QueryUtil {
 		
 		return query;		
 	}
-
+///////////////
 }

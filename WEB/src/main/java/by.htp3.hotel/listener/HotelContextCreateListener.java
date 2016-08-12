@@ -28,7 +28,6 @@ public class HotelContextCreateListener implements ServletContextListener {
 			throw new RuntimeException("JDBC Driver error", e);
 		}
 
-	
 	}
 
 }

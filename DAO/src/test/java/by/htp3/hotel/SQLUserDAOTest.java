@@ -3,9 +3,15 @@ package by.htp3.hotel;
 import by.htp3.hotel.bean.User;
 import by.htp3.hotel.dao.exception.DAOException;
 import by.htp3.hotel.dao.impl.SQLUserDAO;
+import by.htp3.hotel.dao.impl.pool.ConnectionPool;
+import by.htp3.hotel.dao.impl.pool.ConnectionPoolException;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import java.sql.Connection;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test for simple App.
@@ -46,12 +52,12 @@ public class SQLUserDAOTest
 
 }
 
-//    public void testUser() throws ConnectionPoolException {
+//    public void testUser() {
 //        ConnectionPool pool = new ConnectionPool();
-//        pool.init2();
-//
-//        Connection con = pool.takeConnection();
-//
-//        assertTrue(con != null);
-//    }
-
+//        try {
+//            pool.init2();
+//            Connection con = pool.takeConnection();
+//            assertTrue(con != null);
+//        } catch (ConnectionPoolException e) {
+//            e.printStackTrace();
+//        }

@@ -1,24 +1,87 @@
 package by.htp3.hotel.bean;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
+import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "ROOM", schema = "mydb")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Room {
-	private int number;
+
+	@Id
+	@Column(name = "ROOM_ID")
+	@GeneratedValue
+	private Long roomid;
+
+	@Column(name = "NUMBER")
+	private Long number;
+
+	@Column(name = "TYPE")
 	private String type;
+
+	@Column(name = "PRICE")
 	private int price;
-	private Integer userid;
-	
-	public Room(int number, String type, int price, Integer userid){
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private User user;
+
+	@ManyToMany(cascade = {CascadeType.ALL})
+	@JoinTable(name="ROOM_BOOKING",
+			joinColumns={@JoinColumn(name="ROOM_ID")},
+			inverseJoinColumns={@JoinColumn(name="BOOKING_ID")})
+	private Set<Order> orders = new HashSet<>();
+	private Long userid;
+
+	public Room(Long number, String type, int price, Integer userid){
 		this.number = number;
 		this.type = type;
 		this.price = price;
-		this.setUserid(userid);
 	}
-	
-	
-	public int getNumber() {
+
+	public Room() {
+	}
+
+	public void setUserid(Long userid) {
+		this.userid = userid;
+	}
+
+	public Long getRoomid() {
+		return roomid;
+	}
+
+	public void setRoomid(Long roomid) {
+		this.roomid = roomid;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Set<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
+	}
+
+	public Long getNumber() {
 		return number;
 	}
 	
-	public void setNumber(int number) {
+	public void setNumber(Long number) {
 		this.number = number;
 	}
 	
@@ -38,15 +101,7 @@ public class Room {
 		this.price = price;
 	}
 
-	public Integer getUserid() {
+	public Long getUserid() {
 		return userid;
 	}
-
-	public void setUserid(Integer userid) {
-		this.userid = userid;
-	}
-	
-	
-	
-
 }

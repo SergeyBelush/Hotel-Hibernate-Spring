@@ -1,10 +1,7 @@
 package by.htp3.hotel.dao.impl;
 
 import by.htp3.hotel.bean.Room;
-import by.htp3.hotel.dao.exception.DAOException;
 import junit.framework.TestCase;
-
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -13,11 +10,11 @@ import java.util.List;
 public class SQLRoomDAOTest extends TestCase{
 
 
-    public void testRoom() throws DAOException, IOException {
+    public void testRoom() throws Exception {
 
-        SQLRoomDAO roomDAO = new SQLRoomDAO();
+        RoomDAO roomDAO = new RoomDAO();
 
-        roomDAO.addNewRoom("Test", "500", "0");
+        roomDAO.addNewRoom("Test", 500, 0L);
 
         List<Room> rooms = roomDAO.getFreeRoomsFromDatabase();
 

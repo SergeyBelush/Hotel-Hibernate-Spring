@@ -1,30 +1,15 @@
 package by.htp3.hotel.dao;
 
-import by.htp3.hotel.dao.impl.SQLRoomDAO;
-import by.htp3.hotel.dao.impl.SQLUserDAO;
+import by.htp3.hotel.dao.impl.RoomDAO;
+import by.htp3.hotel.dao.impl.UserDAO;
 
 public final class DAOFactory {
 
-	private static final DAOFactory instance = new DAOFactory();
+	public static UserDAO userDAO = new UserDAO();
+	public static RoomDAO roomDAO = new RoomDAO();
 
-	private UserDAO userDAO = new SQLUserDAO();
-	private RoomDAO roomDAO = new SQLRoomDAO();
-	
-	private DAOFactory(){}
-	
-	
-	public UserDAO getUserDAO(){
-		return userDAO;
-	}
-	
-	public RoomDAO getRoomDAO(){
-		return roomDAO;
-	}
-	
-	
-	public static DAOFactory getInstance(){
-		return instance;
-		//dsfsgasfa
+	private DAOFactory(){
+
 	}
 	
 }

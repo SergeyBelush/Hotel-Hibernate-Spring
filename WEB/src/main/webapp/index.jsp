@@ -6,8 +6,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Six Stars</title>
+	<link type="text/css" rel="stylesheet" href="hotel.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Six Stars</title>
 </head>
 <body>
 
@@ -17,31 +18,33 @@
 
 	<fmt:message bundle="${loc}" key="locale.change_language.ru" var="ru" />
 	<fmt:message bundle="${loc}" key="locale.change_language.en" var="en" />
+	<fmt:message bundle="${loc}" key="locale.index.sign_in" var="sign_in" />
+	<fmt:message bundle="${loc}" key="locale.index.create_account" var="create_account" />
 
-	<a href="Controller?command=change_language&language=ru">${ru}</a>
-	<a href="Controller?command=change_language&language=en">${en}</a>
-<br/>
+<br>
 
 	<fmt:message bundle="${loc}" key="locale.index.login" var="login" />
 
 	<jsp:useBean id="errorMessage" class="java.lang.String" scope="request" />
 
+	<div class="centre">
 
-	<div
-		style="margin: 1em; padding: 1em; border: 1px solid black; background-color: pink;">
-		<h3>Hotel "Six Stars"</h3>
+	<a href="Controller?command=change_language&language=ru">${ru}</a>
+	<a href="Controller?command=change_language&language=en">${en}</a>
+		<br>
 
-		<br />
+		<h3>Hotel "Luxury"</h3>
+
+		<br>
 
 		<form action="Controller" method="post">
-			<input type="hidden" name="command" value="logination" /> Login: <br />
-			<input type="text" name="login" value="" /><br /> Password: <br />
-			<input type="password" name="password" value="" /> <br />
+			<input type="hidden" name="command" value="logination"> Login: <br>
+			<input type="text" name="login" value=""><br /> Password: <br>
+			<input type="password" name="password" value=""> <br>
 			<c:out value="${errorMessage}" />
 
-			<br /> <input type="submit" name="sing in" value="Sign in" /> <a
-				href="registeraccount.jsp" style="margin-left: 1em; color: black;">
-				Create Account </a>
+			<br> <button type="submit">${sign_in}</button>
+			<br> <br> <button type="submit" formaction="registeraccount.jsp">${create_account}</button>
 
 		</form>
 	</div>

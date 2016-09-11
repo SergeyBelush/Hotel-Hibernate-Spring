@@ -4,31 +4,36 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Register Account</title>
+	<script src="hotel.js"></script>
+	<link type="text/css" rel="stylesheet" href="hotel.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Register Account</title>
 </head>
 <body>
 
-<div style="margin:1em; padding:1em; border:1px solid black; background-color:pink;">
+
+
+<div class="centre">
 	<h3>Register New Account</h3>
-	<form action="Controller" method="post" >
+	<form id="index-form" action="Controller" method="post" >
 		<input type="hidden" name="command" value="registration" /> 
 		Name: <br />
-		<input type="text" name="name" value="" /><br /> 
+		<input id="index-name" type="text" name="name" value="" /><br />
 		Surname: <br />
-		<input type="text" name="surname" value="" /><br /> 
+		<input id="index-surname" type="text" name="surname" value="" /><br />
 		Login: <br />
-		<input type="text" name="login" value="" /><br /> 
+		<input type="text" name="login" value="" /><br />
 		Password: <br />
 		<input type="password" name="password" value="" /><br /> 
 		Repeat Password: <br />
 		<input type="password" name="repeat-password" value="" /><br /> 
 		E-mail: <br />
-		<input type="text" name="e-mail" value="" />
+		<input id="index-email" type="text" name="e-mail" value="" />
 		
-		<br /> <c:out value="${errorMessage}" />
+		<br /> <c:out value="${errorMessage}"/>
+		<p id="oshibka"></p>
 
-		<input type="submit" name="register" value="Create Account"/>
+		<button onclick="proverkaBrouzer()" type="button">Create Account</button>
 	
 	</form>
 	</div>

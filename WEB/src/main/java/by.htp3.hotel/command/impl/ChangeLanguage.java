@@ -23,7 +23,7 @@ public class ChangeLanguage implements Command {
 		if (prev_query != null) {
 			response.sendRedirect(prev_query);
 		} else {
-			request.getRequestDispatcher("index.jsp").forward(request, response);
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
 	}
 

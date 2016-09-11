@@ -1,12 +1,9 @@
 package by.htp3.hotel.dao.impl;
 
 import by.htp3.hotel.bean.User;
-import by.htp3.hotel.dao.exception.DAOException;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test for simple App.
@@ -32,9 +29,9 @@ public class SQLUserDAOTest
     /**
      * Rigourous Test :-)
      */
-    public void testUser() throws DAOException {
+    public void testUser() throws Exception {
 
-        SQLUserDAO dao = new SQLUserDAO();
+        UserDAO dao = new UserDAO();
 
         dao.register("Test", "Test", "Test", "Test", "Test@mail.ru");
 

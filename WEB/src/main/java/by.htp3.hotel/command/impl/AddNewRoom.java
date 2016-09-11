@@ -8,9 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import by.htp3.hotel.command.Command;
 import by.htp3.hotel.controller.Controller;
-import by.htp3.hotel.service.RoomService;
-import by.htp3.hotel.service.ServiceFactory;
-import by.htp3.hotel.service.exception.ServiceException;
+import by.htp3.hotel.dao.DAOFactory;
 
 public class AddNewRoom implements Command {
 
@@ -34,17 +32,18 @@ public class AddNewRoom implements Command {
 		if (roomnumber == null || roomnumber == "") {
 			send("Please, Enter Room Number!", request, response);
 			return;
-		}	
-		
+		}
+
+		Integer price_a_day_integer = Integer.valueOf(priceADay);
+		Long room_number_long = Long.valueOf(roomnumber);
+
+
 		try {
-			RoomService roomService = ServiceFactory.getInstance().getRoomService();
-			roomService.addNewRoom(type, priceADay, roomnumber);
+			DAOFactory.roomDAO.addNewRoom(type, price_a_day_integer, room_number_long);
 			Controller.redirect("Controller?&command=show_free_rooms", request, response);
-			
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			send(e.getMessage(), request, response);
 			e.printStackTrace();
-			//request.getRequestDispatcher("addroom.jsp").forward(request, response);
 		}
 	}
 

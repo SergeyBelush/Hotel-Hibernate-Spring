@@ -25,6 +25,21 @@
       <artifactId>ENTITIES</artifactId>
       <version>1.0</version>
     </dependency>
+      <dependency>
+          <groupId>by.htp3.hotel</groupId>
+          <artifactId>SERVICES</artifactId>
+          <version>1.0</version>
+      </dependency>
+<!--      <dependency>
+          <groupId>by.htp3.hotel</groupId>
+          <artifactId>WEB</artifactId>
+          <version>1.0</version>
+      </dependency>-->
+<!--      <dependency>
+          <groupId>by.htp3.hotel</groupId>
+          <artifactId>Hotel</artifactId>
+          <version>1.0</version>
+      </dependency>-->
 
   </dependencies>
 </project>

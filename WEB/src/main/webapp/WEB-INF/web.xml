@@ -11,7 +11,7 @@
   </welcome-file-list>
 
   <servlet>
-    <description></description>
+    <description/>
     <display-name>Controller</display-name>
     <servlet-name>Controller</servlet-name>
     <servlet-class>by.htp3.hotel.controller.Controller</servlet-class>
@@ -21,6 +21,17 @@
     <servlet-name>Controller</servlet-name>
     <url-pattern>/Controller</url-pattern>
   </servlet-mapping>
+
+<!--  <filter>
+    <description/>
+    <filter-name>MyFilter</filter-name>
+    <filter-class>by.htp3.hotel.controller.Controller</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>MyFilter</filter-name>
+    <url-pattern>/MyFilter</url-pattern>
+  </filter-mapping>-->
 
   <listener>
     <listener-class>by.htp3.hotel.listener.HotelContextCreateListener</listener-class>

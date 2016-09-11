@@ -1,12 +1,6 @@
 package by.htp3.hotel.command.impl;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -30,7 +24,7 @@ public class GetFreeRooms implements Command {
 
 		System.out.println(query);
 
-		List<Room> rooms = DAOFactory.getInstance().getRoomDAO().getFreeRoomsFromDatabase();
+		List<Room> rooms = DAOFactory.roomDAO.getFreeRoomsFromDatabase();
 
 		request.setAttribute("free_rooms", rooms);
 

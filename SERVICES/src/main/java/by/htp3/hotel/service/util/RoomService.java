@@ -1,63 +1,57 @@
 package by.htp3.hotel.service.util;
 
 import by.htp3.hotel.bean.Room;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import by.htp3.hotel.dao.impl.RoomDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class RoomService {
 
-    public static List<Room> getRoomList(boolean pagination) {
+    @Autowired
+    private RoomDAO roomDAO;
 
-        Session session = HibernateUtil.getSession();
-        Query query = session.createQuery("FROM Room");
-        List<Room> rooms = query.list();
+    @Transactional
+    public List<Room> getRoomList() {
 
-        for(Room room : rooms) {
-            if (room.getUserid() == null)
-                rooms.add(room);
-                System.out.println("Rooms:" + room.getRoomid() + ", " + room.getNumber() +
-                        ", " + room.getPrice() + ", " + room.getType());
+        List<Room> freerooms = new ArrayList<>();
+        List<Room> rooms = roomDAO.getFreeRoomsFromDatabase(true);
+
+        if (rooms != null) {
+            for (Room room : rooms)
+                if (room.getUserid() == null) {
+                    freerooms.add(room);
+                    System.out.println("Rooms:" + room.getNumber()
+                            + ", " + room.getPrice() + ", " + room.getType());
+                }
         }
 
-        if (pagination) {
-            query.setFirstResult(0);
-            query.setMaxResults(5);
-        }
-
-        query.setCacheable(true);
-        return rooms;
+        return freerooms;
     }
 
-    public static void reserveRoom(Long xnumber, Long userId) {
-        Session session = HibernateUtil.getSession();
-        Transaction transaction = session.beginTransaction();
+    @Transactional
+    public void reserveRoom(Long xnumber, Long userId) {
 
-        List<Room> rooms = getRoomList(false);
-        for (Room room : rooms) {
-            if (room.getNumber() == xnumber) {
-                room.setUserid(userId);
-                session.persist(room);
-            }
-        }
-        transaction.commit();
+        roomDAO.reserveRoom(xnumber, userId);
     }
 
-    public static void deleteRoom(String value, String tableName, String columnName){
+    @Transactional
+    public void deleteRoom(){
 
-        Session session = HibernateUtil.getSession();
-        Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("DELETE FROM " + tableName + " WHERE " + columnName + " = :val");
-        query.setParameter("val", value);
-
-        query.executeUpdate();
-        transaction.commit();
+        roomDAO.deleteRoom();
     }
 
+    @Transactional
+    public List<Room> getFreeRoomsFromDatabase() {
+        return roomDAO.getFreeRoomsFromDatabase(true);
+    }
 
-    /*    public static void deleteRoom(String numberRoom) {
-        HibernateUtil.deleteEntity(numberRoom, "Room", "number");
-    }*/
+    public void addNewRoom(String type, Integer price_a_day, Long roomnumber) {
+
+        roomDAO.addNewRoom(type, price_a_day, roomnumber);
+    }
 
 }

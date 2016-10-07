@@ -3,14 +3,14 @@ package by.htp3.hotel.command.impl;
 
 import by.htp3.hotel.command.Command;
 import by.htp3.hotel.controller.Controller;
-import by.htp3.hotel.dao.DAOFactory;
-
+import by.htp3.hotel.controller.RoomController;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ReserveRooms implements Command {
+public class ReserveRooms extends RoomController implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -24,7 +24,21 @@ public class ReserveRooms implements Command {
 
         Long xnum = Long.valueOf(internumber);
 
-        DAOFactory.roomDAO.reserveRoom(xnum, 1L);
+        Cookie[] cookies = request.getCookies();
+        System.out.println("Cookieeeeeeeeee " + cookies.length);
+        Long userId = null;
+
+        for(Cookie cook : cookies){
+            if (cook.getName().equals("id")){
+               userId = Long.valueOf(cook.getValue());
+                break;
+            }
+        }
+
+        if (userId == null) {
+            Controller.redirect("index.jsp", request, response);
+        }
+        roomService.reserveRoom(xnum, userId);
 
         Controller.redirect("reserve.jsp", request, response);
     }

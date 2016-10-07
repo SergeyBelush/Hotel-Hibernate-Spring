@@ -1,14 +1,12 @@
 package by.htp3.hotel.controller;
 
-import java.io.IOException;
-import java.util.Random;
-import javax.servlet.*;
+import by.htp3.hotel.command.Command;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import by.htp3.hotel.command.Command;
-import by.htp3.hotel.command.impl.AddNewRoom;
-import by.htp3.hotel.command.impl.GetFreeRooms;
+import java.io.IOException;
 
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -27,17 +25,6 @@ public class Controller extends HttpServlet {
 		String commandName = request.getParameter("command");
 		Command command  = helper.getCommand(commandName);		
 		command.execute(request, response);
-
-/*
-		int x = new Random().nextInt(2);
-		Command may;
-		if (x == 0){
-			may = new AddNewRoom();
-		} else {
-			may = new GetFreeRooms();
-		}
-		may.execute(request, response);
-*/
 	}
 
 
@@ -47,30 +34,3 @@ public class Controller extends HttpServlet {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-	/*public void init(FilterConfig filterConfig) throws ServletException {
-	}
-
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
-			throws IOException, ServletException{
-
-		String myParam = request.getParameter("command");
-
-		if(!"blockTheRequest".equals(myParam)){
-			filterChain.doFilter(request, response);
-		}
-	}
-
-	public void destroy() {
-	}*/

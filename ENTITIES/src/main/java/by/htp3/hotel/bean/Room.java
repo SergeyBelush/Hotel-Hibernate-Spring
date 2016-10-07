@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -104,4 +105,19 @@ public class Room {
 	public Long getUserid() {
 		return userid;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Room room = (Room) o;
+		return Objects.equals(number, room.number);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(number);
+	}
+
+
 }

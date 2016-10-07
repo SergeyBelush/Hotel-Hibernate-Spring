@@ -4,9 +4,6 @@ import by.htp3.hotel.bean.Room;
 import junit.framework.TestCase;
 import java.util.List;
 
-/**
- * Created by Сергей on 12.08.2016
- */
 public class SQLRoomDAOTest extends TestCase{
 
 
@@ -16,7 +13,7 @@ public class SQLRoomDAOTest extends TestCase{
 
         roomDAO.addNewRoom("Test", 500, 0L);
 
-        List<Room> rooms = roomDAO.getFreeRoomsFromDatabase();
+        List<Room> rooms = roomDAO.getFreeRoomsFromDatabase(true);
 
         Room komnata = null;
 
@@ -28,7 +25,7 @@ public class SQLRoomDAOTest extends TestCase{
 
        assertTrue(komnata != null);
 
-        roomDAO.delete("0");
+        roomDAO.delete("0", "room", "NUMBER");
     }
 
 

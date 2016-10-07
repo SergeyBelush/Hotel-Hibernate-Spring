@@ -1,45 +1,40 @@
 package by.htp3.hotel.service.util;
 
-
 import by.htp3.hotel.bean.User;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import by.htp3.hotel.dao.impl.UserDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
 public class UserService {
 
-    public static List<User> getUserList(String login, String password) {
+    @Autowired
+    private UserDAO userDAO;
 
-        Session session = HibernateUtil.getSession();
+    @Transactional
+    public List<User> getUserList(String login, String password) {
 
-        String hql = "SELECT x from User x where x.login= :login and x.pass= :password";
-
-        Query query = session.createQuery(hql);
-        query.setParameter("login", login);
-        query.setParameter("password", password);
-        query.setCacheable(true);
-
-        return query.list();
-
+        return userDAO.getListUsers(login, password);
     }
 
-/*    public static void deleteUser(String userLogin) {
+    @Transactional
+    public void deleteUser(){
 
-        HibernateUtil.deleteEntity(userLogin, "User", "login");
+       userDAO.delete("1");
+    }
 
-    }*/
+    @Transactional
+    public User authorisation(String login, String password) throws Exception {
 
-    public static void deleteUser(String value, String tableName, String columnName){
+        return userDAO.authorisation(login, password);
+    }
 
-        Session session = HibernateUtil.getSession();
-        Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("DELETE FROM " + tableName + " WHERE " + columnName + " = :val");
-        query.setParameter("val", value);
-
-        query.executeUpdate();
-        transaction.commit();
+    @Transactional
+    public void register(String name, String surname, String login, String pass, String mail) {
+        userDAO.register(name, surname, login, pass, mail);
     }
 }
 

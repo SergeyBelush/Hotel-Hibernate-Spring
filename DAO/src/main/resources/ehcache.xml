@@ -31,7 +31,3 @@
     />
 
 </ehcache>
-
-       <!-- timeToIdleSecond="300"
-        timeToLiveSecond="300"
-        diskExpiryTreadIntervalSecond="300"-->

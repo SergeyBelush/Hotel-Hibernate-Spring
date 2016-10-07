@@ -5,30 +5,25 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-/**
- * Unit test for simple App.
- */
+
+
 public class SQLUserDAOTest
     extends TestCase {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
+
+
+
     public SQLUserDAOTest(String testName) {
         super(testName);
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
+
+
     public static Test suite() {
         return new TestSuite(SQLUserDAOTest.class);
     }
 
-    /**
-     * Rigourous Test :-)
-     */
+
+
     public void testUser() throws Exception {
 
         UserDAO dao = new UserDAO();
@@ -39,7 +34,7 @@ public class SQLUserDAOTest
 
         assertTrue(person != null);
 
-        dao.delete("Test");
+        dao.delete("1");
     }
 
 }

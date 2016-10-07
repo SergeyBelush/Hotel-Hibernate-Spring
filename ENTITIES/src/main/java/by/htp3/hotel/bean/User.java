@@ -1,14 +1,13 @@
 package by.htp3.hotel.bean;
-import org.hibernate.annotations.*;
+
 import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "USER", schema = "mydb")
+@Table(name = "user", schema = "mydb")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User {
 
@@ -105,4 +104,38 @@ public class User {
 		this.mail = mail;
 	}
 
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		User user = (User) o;
+		return Objects.equals(userid, user.userid) &&
+				Objects.equals(name, user.name) &&
+				Objects.equals(surname, user.surname) &&
+				Objects.equals(numberRoom, user.numberRoom) &&
+				Objects.equals(login, user.login) &&
+				Objects.equals(pass, user.pass) &&
+				Objects.equals(mail, user.mail) &&
+				Objects.equals(rooms, user.rooms);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(userid, name, surname, numberRoom, login, pass, mail, rooms);
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"userid=" + userid +
+				", name='" + name + '\'' +
+				", surname='" + surname + '\'' +
+				", numberRoom=" + numberRoom +
+				", login='" + login + '\'' +
+				", pass='" + pass + '\'' +
+				", mail='" + mail + '\'' +
+				", rooms=" + rooms +
+				'}';
+	}
 }

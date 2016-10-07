@@ -1,16 +1,15 @@
 package by.htp3.hotel.command.impl;
 
-import by.htp3.hotel.bean.User;
 import by.htp3.hotel.command.Command;
 import by.htp3.hotel.controller.Controller;
-import by.htp3.hotel.dao.DAOFactory;
+import by.htp3.hotel.controller.UserController;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class CommandRegistration implements Command {
+public class CommandRegistration extends UserController implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -53,21 +52,20 @@ public class CommandRegistration implements Command {
 		}
 		
 		try {
-			DAOFactory.userDAO.register(entername, entersurname, enterlogin, enterpass, entermail);
+			userService.register(entername, entersurname, enterlogin, enterpass, entermail);
 		} catch (Exception e) {
 			send("Server is not available. Sorry! Please try again in 10 minutes", request, response);
 		}
 
-		User user = null;
+/*		User user = null;
 		try {
-			user = DAOFactory.userDAO.authorisation(enterlogin, enterpass);
+			user = userService.authorisation(enterlogin, enterpass);
 		} catch (Exception e) {
 			Controller.redirect("index.jsp", request, response);
 		}
 		request.setAttribute("user", user);
 		
-		Controller.redirect("user.jsp", request, response);
-		
+		Controller.redirect("user.jsp", request, response);*/
 	}
 	
 	private void send(String message, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

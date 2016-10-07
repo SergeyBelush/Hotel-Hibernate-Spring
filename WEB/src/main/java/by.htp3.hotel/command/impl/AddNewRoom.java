@@ -1,16 +1,15 @@
 package by.htp3.hotel.command.impl;
 
-import java.io.IOException;
+import by.htp3.hotel.command.Command;
+import by.htp3.hotel.controller.Controller;
+import by.htp3.hotel.controller.RoomController;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-import by.htp3.hotel.command.Command;
-import by.htp3.hotel.controller.Controller;
-import by.htp3.hotel.dao.DAOFactory;
-
-public class AddNewRoom implements Command {
+public class AddNewRoom extends RoomController implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -37,9 +36,8 @@ public class AddNewRoom implements Command {
 		Integer price_a_day_integer = Integer.valueOf(priceADay);
 		Long room_number_long = Long.valueOf(roomnumber);
 
-
 		try {
-			DAOFactory.roomDAO.addNewRoom(type, price_a_day_integer, room_number_long);
+			roomService.addNewRoom(type, price_a_day_integer, room_number_long);
 			Controller.redirect("Controller?&command=show_free_rooms", request, response);
 		} catch (Exception e) {
 			send(e.getMessage(), request, response);

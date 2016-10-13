@@ -3,13 +3,10 @@ package by.htp3.hotel.bean;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
 import javax.persistence.*;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "ROOM", schema = "mydb")
@@ -19,7 +16,7 @@ public class Room {
 	@Id
 	@Column(name = "ROOM_ID")
 	@GeneratedValue
-	private Long roomid;
+	private Long id;
 
 	@Column(name = "NUMBER")
 	private Long number;
@@ -30,17 +27,6 @@ public class Room {
 	@Column(name = "PRICE")
 	private int price;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private User user;
-
-	@ManyToMany(cascade = {CascadeType.ALL})
-	@JoinTable(name="ROOM_BOOKING",
-			joinColumns={@JoinColumn(name="ROOM_ID")},
-			inverseJoinColumns={@JoinColumn(name="BOOKING_ID")})
-	private Set<Order> orders = new HashSet<>();
-	private Long userid;
-
 	public Room(Long number, String type, int price, Integer userid){
 		this.number = number;
 		this.type = type;
@@ -50,32 +36,13 @@ public class Room {
 	public Room() {
 	}
 
-	public void setUserid(Long userid) {
-		this.userid = userid;
+
+	public Long getId() {
+		return id;
 	}
 
-	public Long getRoomid() {
-		return roomid;
-	}
-
-	public void setRoomid(Long roomid) {
-		this.roomid = roomid;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Set<Order> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(Set<Order> orders) {
-		this.orders = orders;
+	public void setId(Long roomid) {
+		this.id = roomid;
 	}
 
 	public Long getNumber() {
@@ -102,22 +69,29 @@ public class Room {
 		this.price = price;
 	}
 
-	public Long getUserid() {
-		return userid;
-	}
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Room room = (Room) o;
-		return Objects.equals(number, room.number);
+		return price == room.price &&
+				Objects.equals(id, room.id) &&
+				Objects.equals(number, room.number) &&
+				Objects.equals(type, room.type);
+	}
+
+	@Override
+	public String toString() {
+		return "Room{" +
+				"roomid=" + id +
+				", number=" + number +
+				", type='" + type + '\'' +
+				", price=" + price +
+				'}';
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(number);
+		return Objects.hash(id, number, type, price);
 	}
-
-
 }

@@ -1,13 +1,19 @@
 package by.htp3.hotel.controller;
 
+import by.htp3.hotel.bean.Order;
 import by.htp3.hotel.bean.User;
-import by.htp3.hotel.service.util.UserService;
+import by.htp3.hotel.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class UserController {
@@ -15,12 +21,12 @@ public class UserController {
     @Autowired
     protected UserService userService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+
+    @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
     public ModelAndView index() {
 
         System.out.println("inside indexxxxxxxxxxxxxxxxxxx");
-        return new ModelAndView("index", "user", new User());
-        /*return "index";*/
+        return new ModelAndView("/index", "user", new User());
     }
 
     @RequestMapping(value = "/checkuser", method = RequestMethod.POST)
@@ -29,71 +35,53 @@ public class UserController {
         System.out.println("inside checkUserrrrrrrrrrrrrrrrr" + " Login " + user.getLogin() +
                 " Pass " + user.getPass());
 
-        /*userService.authorisation(user.getLogin(), user.getPass());*/
+        User u = userService.authorisation(user.getLogin(), user.getPass());
 
-        return new ModelAndView("user", "user", user);
+        if(u != null) {
+
+            UsernamePasswordAuthenticationToken token =
+                    new UsernamePasswordAuthenticationToken(u.getLogin(), u.getPass());
+            SecurityContextHolder.getContext().setAuthentication(token);
+
+            List<Order> orders = userService.getOrders(u.getLogin());
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("user", u);
+            map.put("orders", orders);
+
+            return new ModelAndView("/user/user", map);
+        } else {
+            return new ModelAndView("/index", "errorMessage", "Wrong login or password!!!");
+        }
     }
+
+    @RequestMapping(value = {"/checkuser", "/registeraccount", "/register"}, method = RequestMethod.GET)
+    public ModelAndView checkuser() throws Exception {
+        return index();
+    }
+
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ModelAndView register() {
+
+        System.out.println("inside regiserrrrrrrrrrrrr");
+
+        return new ModelAndView("/user/registeraccount", "registeraccount", new User());
+    }
+
+
+    @RequestMapping(value = "/registeraccount", method = RequestMethod.POST)
+    public ModelAndView registerAccount(@ModelAttribute("registeraccount") User user) {
+
+        User user1 = userService.register(user.getName(), user.getSurname(), user.getLogin(),
+                user.getPass(), user.getMail());
+
+        UsernamePasswordAuthenticationToken token =
+                new UsernamePasswordAuthenticationToken(user1.getLogin(), user1.getPass());
+        SecurityContextHolder.getContext().setAuthentication(token);
+
+        return new ModelAndView("/user/user", "user", user1);
+    }
+
+
 }
-
-
-/*        @RequestMapping(value = "/index",  method = RequestMethod.GET)
-        public String main() {
-
-        return "index";
-    }*/
-
-/*    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView main() {
-
-        return new ModelAndView("index", "user", new User());
-    }
-
-
-    @RequestMapping(value = "/checkuser", method = RequestMethod.POST)
-    public ModelAndView checkUser(@ModelAttribute("user") User user) {
-
-        return new ModelAndView("user", "user", user);
-    }*/
-
-
-
-
-/*    @RequestMapping(value = "/",  method = RequestMethod.GET)
-    public String main() {
-
-        return "index";
-    }*/
-
-
-/*
-<form:form action="signIn" method="post" modelAttribute="user">
-<form:input path="login"<br/><br/>
-<form:input path="password"<br/><br/>
-</form:form>
-
-@RequestMapping(value = "/signIn", method = RequestMethod.POST)
-public String signIn(@ModelAttribute("aaa") User user) {
-
-        userService.signIn(user.getLogin(), user.getPassword());
-
-        return "main";
-        }*/
-
-
-
-/*
-    @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
-    public String main() {
-
-        return "index";
-    }*/
-
-
-
-/*    @RequestMapping(value = {"/", "/user"}, method = RequestMethod.POST)
-    public String authorisation(@ModelAttribute("user") User user) throws Exception {
-
-       userService.authorisation(user.getLogin(), user.getPass());
-
-        return "user";
-    }*/

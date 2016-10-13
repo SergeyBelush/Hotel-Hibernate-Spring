@@ -9,80 +9,84 @@
 <html>
 <head>
 
-	<link href="<c:url value="/resources/css/hotel.css" />" rel="stylesheet">
+	<%--<link href="<c:url value="/css/hotel.css" />" rel="stylesheet">--%>
 
-	<%--<link type="text/css" rel="stylesheet" href="hotel.css">--%>
+	<link href="../css/hotel.css" rel="stylesheet"/>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Six Stars</title>
+
+	<style>
+		body {
+			color: white;
+			font-family: sans-serif;
+			background: radial-gradient(hsl(0, 100%, 27%) 4%, hsl(0, 100%, 18%) 9%, hsla(0, 100%, 20%, 0) 9%) 0 0,
+		radial-gradient(hsl(0, 100%, 27%) 4%, hsl(0, 100%, 18%) 8%, hsla(0, 100%, 20%, 0) 10%) 50px 50px,
+		radial-gradient(hsla(0, 100%, 30%, 0.8) 20%, hsla(0, 100%, 20%, 0)) 50px 0,
+		radial-gradient(hsla(0, 100%, 30%, 0.8) 20%, hsla(0, 100%, 20%, 0)) 0 50px,
+		radial-gradient(hsla(0, 100%, 20%, 1) 35%, hsla(0, 100%, 20%, 0) 60%) 50px 0,
+		radial-gradient(hsla(0, 100%, 20%, 1) 35%, hsla(0, 100%, 20%, 0) 60%) 100px 50px,
+		radial-gradient(hsla(0, 100%, 15%, 0.7), hsla(0, 100%, 20%, 0)) 0 0,
+		radial-gradient(hsla(0, 100%, 15%, 0.7), hsla(0, 100%, 20%, 0)) 50px 50px,
+		linear-gradient(45deg, hsla(0, 100%, 20%, 0) 49%, hsla(0, 100%, 0%, 1) 50%, hsla(0, 100%, 20%, 0) 70%) 0 0,
+		linear-gradient(-45deg, hsla(0, 100%, 20%, 0) 49%, hsla(0, 100%, 0%, 1) 50%, hsla(0, 100%, 20%, 0) 70%) 0 0;
+			background-color: #300;
+			background-size: 100px 100px;
+		}
+
+		.centre{
+			margin: auto;
+			width: 20%;
+		}
+
+		a {
+			color: white;
+		}
+
+		button {
+			background-color: indigo;
+			color: aliceblue;
+			border: 2px solid;
+			border-radius: 15px;
+			padding: 0.5em 1em 0.5em 1em;
+			font-size: medium;
+		}
+
+		#oshibka {
+			margin-top: 10px;
+			margin-bottom: 10px;
+			color: pink;
+			font-weight: bold;
+		}
+
+	</style>
+
 </head>
 <body>
-
-
-<h3>Hello World!!!</h3>
 <br/>
-	<fmt:setLocale value="${sessionScope.locale}" />
-	<fmt:setBundle basename="resources.locale" var="loc" />
-
-	<fmt:message bundle="${loc}" key="locale.change_language.ru" var="ru" />
-	<fmt:message bundle="${loc}" key="locale.change_language.en" var="en" />
-	<fmt:message bundle="${loc}" key="locale.index.sign_in" var="sign_in" />
-	<fmt:message bundle="${loc}" key="locale.index.create_account" var="create_account" />
-
 <br>
 
-	<fmt:message bundle="${loc}" key="locale.index.login" var="login" />
-
-	<jsp:useBean id="errorMessage" class="java.lang.String" scope="request" />
-
 	<div class="centre">
-
-	<a href="Controller?command=change_language&language=ru">${ru}</a>
-	<a href="Controller?command=change_language&language=en">${en}</a>
 		<br>
-
 		<h1>Hotel "Luxury"</h1>
-
 		<br>
-
-<%--		<form:form action="signIn" method="post" modelAttribute="user">
-			<form:input path="login"/>
-			<form:input path="password"/>
-		</form:form>--%>
-
-
-	<%--<form:form method="get" action="/HelloUser/redirect">
-
-		<input type="submit" value="Redirect Page"/>--%>
-
-		<%--<input type="submit" value="Submit"/>--%>
-	<%--<form:form>--%>
-
 		<form:form method="post" action="checkuser" modelAttribute="user">
 
 			<br><form:label path="login">Login:</form:label><br>
-			<br><form:input type="text" path="login"/><br>
+			<br><form:input name="login" type="text" path="login"/><br>
 
 			<br><form:label path="pass">Password:</form:label><br>
-			<br><form:input type="text" path="pass"/><br>
+			<br><form:input name="pass" type="text" path="pass"/><br>
 
+			<c:out value="${errorMessage}" />
 
-			<br><input type="submit" value="Submit"/><br>
-
-
-			<<%--input type="hidden" name="command" value="login"> Login: <br>
-			<input type="text" name="login" value=""><br /> Password: <br>
-			<input type="password" name="password" value=""> <br>
---%>
-<%--			<c:out value="${errorMessage}" />
-			<br> <button value="login" type="submit">${sign_in}</button>
-			<br> <br> <button type="submit" formaction="registeraccount.jsp">${create_account}</button>--%>
-
+			<br><input type="submit" value="Login"/><br>
 		</form:form>
-	</div>
 
+	<form:form method="post" action="register" >
+		<br><input type="submit" value="Create Account"/><br>
+	</form:form>
+
+	</div>
 </body>
 </html>
-
-<%--sign_in--%>
-<%--<form action="Controller" method="post">--%>
